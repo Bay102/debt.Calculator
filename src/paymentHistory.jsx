@@ -1,21 +1,24 @@
 import React from "react";
 
 class PaymentHistory extends React.Component {
+  render() {
+    const { info: { allPayments, balance } } = this.props;
 
-   render() {
-      const { balance, payments } = this.props;
-      console.log(payments);
-      return(
-         <div>
-            <label htmlFor="current-balance">Current Balance:{balance}</label>
-            <br /><br />
-            <hr />
-            <ul>
-            
-            </ul>
-         </div>
-      )
-   }
+    return (
+      <div>
+        <label htmlFor="current-balance">Current Balance:{balance}</label>
+        <br />
+        <br />
+        <hr />
+        <div>PAYMENT HISTORY</div>
+        <ul>
+          {allPayments.map((payment) => (
+            <li key={payment.id}>{payment.text}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
 }
 
 export default PaymentHistory;
