@@ -29,3 +29,8 @@ body {
  align-items: center;
 }
 
+.field-wrap {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px auto;
+}

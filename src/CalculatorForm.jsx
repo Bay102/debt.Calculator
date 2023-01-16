@@ -29,55 +29,61 @@ class CalculatorForm extends React.Component {
 
   paymentSubmit = (e) => {
     e.preventDefault();
-    this.calculations();
-    const newPayment = {
-      text: +this.state.paymentAmount,
-      id: Date.now(),
-    };
-    this.setState({
-      allPayments: [...this.state.allPayments, newPayment],
-      paymentAmount: "",
-    });
+    const { balance, paymentAmount } = this.state;
+    const principle = balance * 0.01;
+    if (paymentAmount < principle) {
+      alert("Below Min Payment");
+    } else {
+      this.calculations();
+      const newPayment = {
+        text: +this.state.paymentAmount,
+        id: Date.now(),
+      };
+      this.setState({
+        allPayments: [...this.state.allPayments, newPayment],
+        paymentAmount: "",
+      });
+    }
   };
 
   render() {
     return (
       <div className="calc-wrapper">
         <form>
-          <label className="labels" htmlFor="payment-amount">
-            Enter Your Total Loan:
-          </label>
-          <input
-            onChange={this.startingBalance}
-            id="payment-amount"
-            type="number"
-            autoComplete="off"
-          />
-          <br />
-          <br />
-          <label className="labels" htmlFor="interest-rate">
-            Enter Your Interest Rate:
-          </label>
-          <input
-            onChange={this.interestRate}
-            id="interest-rate"
-            type="number"
-            autoComplete="off"
-          />
-          <br />
-          <br />
-          <label className="labels" htmlFor="amount">
-            Payment Amount:
-          </label>
-          <input
-            onChange={this.paymentAmount}
-            id="amount"
-            type="number"
-            autoComplete="off"
-            value={this.state.paymentAmount}
-          />
-          <br />
-          <br />
+          <div className="field-wrap">
+            <label className="labels" htmlFor="payment-amount">
+              Enter Your Total Loan:
+            </label>
+            <input
+              onChange={this.startingBalance}
+              id="payment-amount"
+              type="number"
+              autoComplete="off"
+            />
+          </div>
+          <div className="field-wrap">
+            <label className="labels" htmlFor="interest-rate">
+              Enter Your Interest Rate:
+            </label>
+            <input
+              onChange={this.interestRate}
+              id="interest-rate"
+              type="number"
+              autoComplete="off"
+            />
+          </div>
+          <div className="field-wrap">
+            <label className="labels" htmlFor="amount">
+              Payment Amount:
+            </label>
+            <input
+              onChange={this.paymentAmount}
+              id="amount"
+              type="number"
+              autoComplete="off"
+              value={this.state.paymentAmount}
+            />
+          </div>
           <div className="pay-button">
             <button onClick={this.paymentSubmit}>Make Payment</button>
           </div>

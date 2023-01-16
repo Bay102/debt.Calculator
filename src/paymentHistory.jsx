@@ -3,10 +3,10 @@ import React from "react";
 class PaymentHistory extends React.Component {
   render() {
     const { info: { allPayments, balance } } = this.props;
-
+    
     return (
       <div>
-        <label htmlFor="current-balance">Current Balance:{balance}</label>
+        <label htmlFor="current-balance">LOAN BALANCE:{balance}</label>
         <br />
         <br />
         <hr />
