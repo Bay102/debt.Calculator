@@ -14,8 +14,13 @@ body {
   /* color: white; */
 }
 
+input {
+  border-radius: 8px;
+}
+
 .calc-wrapper {
-  background-color: rgb(169, 165, 165);
+  background-color: rgb(202, 197, 197);
+  border-radius: 10px;
   width: 400px;
   height: 500px;
   border: 2px outset black;
@@ -33,4 +38,16 @@ body {
   display: flex;
   justify-content: space-between;
   margin: 20px auto;
+}
+
+.balance-wrap {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px auto;
+  padding: 10px ;
+  border: 1px solid black;
+  border-radius: 10px;
+  color: white;
+  font-weight: 800;
+  background-color: red;
 }

@@ -6,10 +6,10 @@ class PaymentHistory extends React.Component {
     
     return (
       <div>
-        <label htmlFor="current-balance">LOAN BALANCE:{balance}</label>
-        <br />
-        <br />
-        <hr />
+        <div className="balance-wrap">
+          <div>LOAN BALANCE:</div> 
+          <div>{balance}</div>
+        </div> 
         <div>PAYMENT HISTORY</div>
         <ul>
           {allPayments.map((payment) => (

@@ -9,24 +9,29 @@ class CalculatorForm extends React.Component {
     allPayments: [],
   };
 
-  startingBalance = ({ target: { value } }) => {
-    this.setState({ balance: value });
-  };
-  interestRate = ({ target: { value } }) => {
-    this.setState({ interest: value });
-  };
-  paymentAmount = ({ target: { value } }) => {
-    this.setState({ paymentAmount: value });
+  handleChange = ({ target: { name, value } }) => {
+    this.setState({ [name]: value });
   };
 
   calculations = () => {
     const { balance, interest, paymentAmount } = this.state;
     const loanInterest = (+interest / 12) * +balance;
     const totalPayment = +paymentAmount - +loanInterest;
-    this.setState({ balance: (balance - +totalPayment).toFixed(2) });
+    this.setState({ balance: (balance - +totalPayment).toFixed(2).toString() });
     return totalPayment;
   };
 
+  preSubmit = () => {
+    this.calculations();
+    const newPayment = {
+      text: +this.state.paymentAmount,
+      id: Date.now(),
+    };
+    this.setState({
+      allPayments: [...this.state.allPayments, newPayment],
+      paymentAmount: "",
+    });
+  };
 
   paymentSubmit = (e) => {
     e.preventDefault();
@@ -35,15 +40,7 @@ class CalculatorForm extends React.Component {
     if (paymentAmount < principle) {
       alert("Below Min Payment");
     } else {
-      this.calculations();
-      const newPayment = {
-        text: +this.state.paymentAmount,
-        id: Date.now(),
-      };
-      this.setState({
-        allPayments: [...this.state.allPayments, newPayment],
-        paymentAmount: "",
-      });
+      this.preSubmit();
     }
   };
 
@@ -56,10 +53,11 @@ class CalculatorForm extends React.Component {
               Enter Your Total Loan:
             </label>
             <input
-              onChange={this.startingBalance}
+              onChange={this.handleChange}
               id="payment-amount"
               type="number"
               autoComplete="off"
+              name="balance"
             />
           </div>
           <div className="field-wrap">
@@ -67,10 +65,11 @@ class CalculatorForm extends React.Component {
               Enter Your Interest Rate:
             </label>
             <input
-              onChange={this.interestRate}
+              onChange={this.handleChange}
               id="interest-rate"
               type="number"
               autoComplete="off"
+              name="interest"
             />
           </div>
           <div className="field-wrap">
@@ -78,18 +77,19 @@ class CalculatorForm extends React.Component {
               Payment Amount:
             </label>
             <input
-              onChange={this.paymentAmount}
+              onChange={this.handleChange}
               id="amount"
               type="number"
               autoComplete="off"
               value={this.state.paymentAmount}
+              name="paymentAmount"
             />
           </div>
           <div className="pay-button">
             <button onClick={this.paymentSubmit}>Make Payment</button>
           </div>
         </form>
-        <hr />
+
         <PaymentHistory info={this.state} />
       </div>
     );
