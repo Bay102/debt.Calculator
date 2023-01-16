@@ -23,9 +23,10 @@ class CalculatorForm extends React.Component {
     const { balance, interest, paymentAmount } = this.state;
     const loanInterest = (+interest / 12) * +balance;
     const totalPayment = +paymentAmount - +loanInterest;
-    this.setState({ balance: balance - +totalPayment });
+    this.setState({ balance: (balance - +totalPayment).toFixed(2) });
     return totalPayment;
   };
+
 
   paymentSubmit = (e) => {
     e.preventDefault();
