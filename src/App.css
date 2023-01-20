@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(56, 55, 55);
+  background-color: rgba(25, 18, 18, 0.96);
 
 }
 
@@ -22,16 +22,18 @@ input {
   background-color: rgb(202, 197, 197);
   border-radius: 10px;
   width: 400px;
-  height: 500px;
+  height: fit-content;
   border: 2px outset black;
   margin: 50px auto;
   padding: 20px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .pay-button {
  display: flex;
  justify-content: center;
  align-items: center;
+ 
 }
 
 .field-wrap {
@@ -50,4 +52,31 @@ input {
   color: white;
   font-weight: 800;
   background-color: red;
+}
+
+.history {
+  text-align: center;
+  font-weight: 600;
+  border-bottom: 1px solid black;
+  width: 200px;
+  margin: auto;
+}
+
+.payoff {
+  display: flex;
+  gap: 10px;
+  padding: 20px 10px;
+  font-size: 10px;
+
+}
+
+.payoff div {
+background-color: white;
+border-radius: 3px;
+margin: auto;
+position: relative;
+bottom: 40px;
+width: 275px;
+padding: 5px;
+  
 }

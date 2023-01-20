@@ -6,6 +6,7 @@ class CalculatorForm extends React.Component {
     balance: "",
     interest: "",
     paymentAmount: "",
+    paymentsUntilPayoff: "",
     allPayments: [],
   };
 
@@ -13,35 +14,58 @@ class CalculatorForm extends React.Component {
     this.setState({ [name]: value });
   };
 
-  calculations = () => {
-    const { balance, interest, paymentAmount } = this.state;
-    const loanInterest = (+interest / 12) * +balance;
-    const totalPayment = +paymentAmount - +loanInterest;
-    this.setState({ balance: (balance - +totalPayment).toFixed(2).toString() });
-    return totalPayment;
-  };
-
-  preSubmit = () => {
-    this.calculations();
-    const newPayment = {
-      text: +this.state.paymentAmount,
-      id: Date.now(),
-    };
+  untilPaidOff = () => {
+    const { balance, paymentAmount } = this.state;
     this.setState({
-      allPayments: [...this.state.allPayments, newPayment],
-      paymentAmount: "",
+      paymentsUntilPayoff: (balance / paymentAmount).toFixed(0),
     });
   };
 
-  paymentSubmit = (e) => {
-    e.preventDefault();
+  calculations = () => {
+    this.untilPaidOff();
+    const { balance, interest, paymentAmount } = this.state;
+    const loanInterest = (+interest / 12) * +balance;
+    const paymentAfterInterest = +paymentAmount - +loanInterest;
+    this.setState({
+      balance: (balance - +paymentAfterInterest).toFixed(2),
+    });
+    return paymentAfterInterest;
+  };
+
+  preSubmit = () => {
+    const { paymentAmount, balance } = this.state;
+    let principle = balance * 0.01;
+    if (paymentAmount > 0 && paymentAmount >= principle) {
+      this.calculations();
+      const newPayment = {
+        text: +this.state.paymentAmount,
+        id: Date.now(),
+      };
+      this.setState({
+        allPayments: [...this.state.allPayments, newPayment],
+        paymentAmount: "",
+      });
+    }
+  };
+
+  payOff = () => {
     const { balance, paymentAmount } = this.state;
     const principle = balance * 0.01;
     if (paymentAmount < principle) {
       alert("Below Min Payment");
+    }
+    if (balance <= 100) {
+    }
+    if (balance === 0) {
+      alert("Loan is Paid Off!");
     } else {
       this.preSubmit();
     }
+  };
+
+  paymentSubmit = (e) => {
+    e.preventDefault();
+    this.payOff();
   };
 
   render() {
