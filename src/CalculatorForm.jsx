@@ -16,11 +16,13 @@ class CalculatorForm extends React.Component {
 
   untilPaidOff = () => {
     const { balance, paymentAmount } = this.state;
-    if (balance > 0) {
+    if (+balance > 0) {
       this.setState({
         paymentsUntilPayoff: (balance / paymentAmount).toFixed(0),
       });
-    } else this.setState({ paymentsUntilPayoff: 0 });
+    } if ( +balance - +paymentAmount === 0) {
+      this.setState({ paymentsUntilPayoff: 0 });
+    }
   };
 
   addToPaymentHistory = () => {
@@ -33,17 +35,6 @@ class CalculatorForm extends React.Component {
       allPayments: [...allPayments, newPayment],
       paymentAmount: "",
     });
-  };
-
-  alerts = () => {
-    const { balance, paymentAmount } = this.state;
-    let principle = balance * 0.01;
-    if (paymentAmount > balance) {
-      alert("Payment is Over Your Current Balance");
-    }
-    if (paymentAmount < principle) {
-      alert(" Your Payment is too Low");
-    }
   };
 
   paymentCalculations = () => {
@@ -69,8 +60,10 @@ class CalculatorForm extends React.Component {
       this.paymentCalculations();
       this.addToPaymentHistory();
       this.untilPaidOff();
-    } else if (+paymentAmount < +principle || paymentAmount > balance) {
-      this.alerts();
+    } else if (+paymentAmount < +principle) {
+      alert("Please pay at least your minimum payment");
+    } else if (+paymentAmount > +balance) {
+      alert("Please do not pay over your current balance");
     }
   };
 
