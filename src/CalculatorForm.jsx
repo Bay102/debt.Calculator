@@ -16,56 +16,62 @@ class CalculatorForm extends React.Component {
 
   untilPaidOff = () => {
     const { balance, paymentAmount } = this.state;
+    if (balance > 0) {
+      this.setState({
+        paymentsUntilPayoff: (balance / paymentAmount).toFixed(0),
+      });
+    } else this.setState({ paymentsUntilPayoff: 0 });
+  };
+
+  addToPaymentHistory = () => {
+    const { paymentAmount, allPayments } = this.state;
+    const newPayment = {
+      text: +paymentAmount,
+      id: Date.now(),
+    };
     this.setState({
-      paymentsUntilPayoff: (balance / paymentAmount).toFixed(0),
+      allPayments: [...allPayments, newPayment],
+      paymentAmount: "",
     });
   };
 
-  calculations = () => {
-    this.untilPaidOff();
+  alerts = () => {
+    const { balance, paymentAmount } = this.state;
+    let principle = balance * 0.01;
+    if (paymentAmount > balance) {
+      alert("Payment is Over Your Current Balance");
+    }
+    if (paymentAmount < principle) {
+      alert(" Your Payment is too Low");
+    }
+  };
+
+  paymentCalculations = () => {
     const { balance, interest, paymentAmount } = this.state;
     const loanInterest = (+interest / 12) * +balance;
     const paymentAfterInterest = +paymentAmount - +loanInterest;
+
     this.setState({
-      balance: (balance - +paymentAfterInterest).toFixed(2),
+      balance: (+balance - +paymentAfterInterest).toFixed(2),
     });
     return paymentAfterInterest;
   };
 
-  preSubmit = () => {
-    const { paymentAmount, balance } = this.state;
-    let principle = balance * 0.01;
-    if (paymentAmount > 0 && paymentAmount >= principle) {
-      this.calculations();
-      const newPayment = {
-        text: +this.state.paymentAmount,
-        id: Date.now(),
-      };
-      this.setState({
-        allPayments: [...this.state.allPayments, newPayment],
-        paymentAmount: "",
-      });
-    }
-  };
-
-  payOff = () => {
-    const { balance, paymentAmount } = this.state;
-    const principle = balance * 0.01;
-    if (paymentAmount < principle) {
-      alert("Below Min Payment");
-    }
-    if (balance <= 100) {
-    }
-    if (balance === 0) {
-      alert("Loan is Paid Off!");
-    } else {
-      this.preSubmit();
-    }
-  };
-
   paymentSubmit = (e) => {
     e.preventDefault();
-    this.payOff();
+    const { balance, paymentAmount } = this.state;
+    let principle = balance * 0.01;
+    if (
+      +paymentAmount >= +principle &&
+      +paymentAmount > 0 &&
+      +paymentAmount <= +balance
+    ) {
+      this.paymentCalculations();
+      this.addToPaymentHistory();
+      this.untilPaidOff();
+    } else if (+paymentAmount < +principle || paymentAmount > balance) {
+      this.alerts();
+    }
   };
 
   render() {

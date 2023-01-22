@@ -1,5 +1,5 @@
 body {
-  background-color: rgba(25, 18, 18, 0.96);
+  background-color: rgba(15, 14, 14, 0.96);
 
 }
 
@@ -19,7 +19,7 @@ input {
 }
 
 .calc-wrapper {
-  background-color: rgb(202, 197, 197);
+  background-color: rgb(52 49 49);
   border-radius: 10px;
   width: 400px;
   height: fit-content;
@@ -40,6 +40,7 @@ input {
   display: flex;
   justify-content: space-between;
   margin: 20px auto;
+  color: white;
 }
 
 .balance-wrap {
@@ -65,9 +66,7 @@ input {
 .payoff {
   display: flex;
   gap: 10px;
-  padding: 20px 10px;
   font-size: 10px;
-
 }
 
 .payoff div {
@@ -75,7 +74,7 @@ background-color: white;
 border-radius: 3px;
 margin: auto;
 position: relative;
-bottom: 40px;
+bottom: 25px;
 width: 275px;
 padding: 5px;
   
