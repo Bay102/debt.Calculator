@@ -20,7 +20,7 @@ class CalculatorForm extends React.Component {
       this.setState({
         paymentsUntilPayoff: (balance / paymentAmount).toFixed(0),
       });
-    } if ( +balance - +paymentAmount === 0) {
+    } if ( +balance - + paymentAmount === 0) {
       this.setState({ paymentsUntilPayoff: 0 });
     }
   };
@@ -41,7 +41,6 @@ class CalculatorForm extends React.Component {
     const { balance, interest, paymentAmount } = this.state;
     const loanInterest = (+interest / 12) * +balance;
     const paymentAfterInterest = +paymentAmount - +loanInterest;
-
     this.setState({
       balance: (+balance - +paymentAfterInterest).toFixed(2),
     });

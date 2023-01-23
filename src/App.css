@@ -3,6 +3,19 @@ body {
 
 }
 
+li { 
+  color: lightgreen;
+  list-style: none;
+}
+
+button {
+  background-color: green;
+  border-radius: 5px;
+  padding: 10px;
+  font-weight: 800;
+}
+  
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -61,6 +74,7 @@ input {
   border-bottom: 1px solid black;
   width: 200px;
   margin: auto;
+  color: lightgreen;
 }
 
 .payoff {
