@@ -18,9 +18,9 @@ class CalculatorForm extends React.Component {
     const { balance, paymentAmount } = this.state;
     if (+balance > 0) {
       this.setState({
-        paymentsUntilPayoff: (balance / paymentAmount).toFixed(0),
+        paymentsUntilPayoff: (balance / paymentAmount - 1 ).toFixed(0),
       });
-    } if ( +balance - + paymentAmount === 0) {
+    } if ( +balance - + paymentAmount === 0 ) {
       this.setState({ paymentsUntilPayoff: 0 });
     }
   };
