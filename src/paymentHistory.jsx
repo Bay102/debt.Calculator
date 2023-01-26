@@ -1,8 +1,7 @@
 import React from "react";
 
-class PaymentHistory extends React.Component {
-  render() {
-    const {  info: { allPayments, balance , paymentsUntilPayoff} } = this.props;
+const PaymentHistory = ({  info: { allPayments, balance , paymentsUntilPayoff} }) => {
+  
 
     return (
       <div>
@@ -21,7 +20,7 @@ class PaymentHistory extends React.Component {
         </ul>
       </div>
     );
-  }
+  
 }
 
 export default PaymentHistory;

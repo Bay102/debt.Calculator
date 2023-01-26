@@ -20,7 +20,7 @@ class CalculatorForm extends React.Component {
       this.setState({
         paymentsUntilPayoff: (balance / paymentAmount - 1 ).toFixed(0),
       });
-    } if ( +balance - + paymentAmount === 0 ) {
+    } else if ( +balance - + paymentAmount === 0 ) {
       this.setState({ paymentsUntilPayoff: 0 });
     }
   };
@@ -67,22 +67,36 @@ class CalculatorForm extends React.Component {
   };
 
   render() {
+
+    const fields = [
+      {id:'payment-amount', label:'Enter Your Total Loan', name: 'balance'},
+      {id:'interest-rate', label:'Enter Your Interest Rate', name: 'interest'},
+      {id:'amount', label:'Payment-Amount', name: 'paymentAmount', value: this.state.paymentAmount},
+    ]
+
     return (
       <div className="calc-wrapper">
         <form>
-          <div className="field-wrap">
-            <label className="labels" htmlFor="payment-amount">
-              Enter Your Total Loan:
+          {fields.map((field) => {
+            const { id, label, name, value } = field
+            return (
+             <div className="field-wrap">
+            <label className="labels" htmlFor={id}>
+              {label}:
             </label>
             <input
               onChange={this.handleChange}
-              id="payment-amount"
+              id={id}
               type="number"
               autoComplete="off"
-              name="balance"
+              name={name}
+              value={value && value}
             />
           </div>
-          <div className="field-wrap">
+          )
+          })}
+         
+          {/* <div className="field-wrap">
             <label className="labels" htmlFor="interest-rate">
               Enter Your Interest Rate:
             </label>
@@ -106,7 +120,7 @@ class CalculatorForm extends React.Component {
               value={this.state.paymentAmount}
               name="paymentAmount"
             />
-          </div>
+          </div> */}
           <div className="pay-button">
             <button onClick={this.paymentSubmit}>Make Payment</button>
           </div>
