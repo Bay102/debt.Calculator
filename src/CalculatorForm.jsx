@@ -67,13 +67,11 @@ class CalculatorForm extends React.Component {
   };
 
   render() {
-
     const fields = [
       {id:'payment-amount', label:'Enter Your Total Loan', name: 'balance'},
       {id:'interest-rate', label:'Enter Your Interest Rate', name: 'interest'},
       {id:'amount', label:'Payment-Amount', name: 'paymentAmount', value: this.state.paymentAmount},
     ]
-
     return (
       <div className="calc-wrapper">
         <form>
@@ -95,32 +93,6 @@ class CalculatorForm extends React.Component {
           </div>
           )
           })}
-         
-          {/* <div className="field-wrap">
-            <label className="labels" htmlFor="interest-rate">
-              Enter Your Interest Rate:
-            </label>
-            <input
-              onChange={this.handleChange}
-              id="interest-rate"
-              type="number"
-              autoComplete="off"
-              name="interest"
-            />
-          </div>
-          <div className="field-wrap">
-            <label className="labels" htmlFor="amount">
-              Payment Amount:
-            </label>
-            <input
-              onChange={this.handleChange}
-              id="amount"
-              type="number"
-              autoComplete="off"
-              value={this.state.paymentAmount}
-              name="paymentAmount"
-            />
-          </div> */}
           <div className="pay-button">
             <button onClick={this.paymentSubmit}>Make Payment</button>
           </div>
