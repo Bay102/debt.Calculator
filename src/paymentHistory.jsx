@@ -2,7 +2,6 @@ import React from "react";
 
 const PaymentHistory = ({  info: { allPayments, balance , paymentsUntilPayoff} }) => {
   
-
     return (
       <div>
         <div className="balance-wrap">
