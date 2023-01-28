@@ -55,6 +55,8 @@ class CalculatorForm extends React.Component {
       paymentAmount: "",
     });
   };
+
+  
   paymentSubmit = (e) => {
     e.preventDefault();
     const { balance, paymentAmount, minPayment } = this.state;
