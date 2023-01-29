@@ -18,28 +18,36 @@ class CalculatorForm extends React.Component {
   minimumPayment = () => {
     const { balance, interest } = this.state;
     let principle = +balance * 0.01;
-    let paymentInterest = (+interest / 1200) * +balance;
-    let minPay = (+principle + +paymentInterest).toFixed(2);
-    this.setState({ minPayment: minPay });
+    let paymentInterest = ((+interest / 1200) * (+balance)).toFixed(2);
+    let minPay;
+
+    balance <= 100
+      ? (minPay = +balance + +principle)
+      : (minPay = (+principle + +paymentInterest).toFixed(2)); 
+
+    return this.setState({ 
+      minPayment: (+minPay).toFixed(2) 
+    });
   };
 
   paymentCalculations = () => {
     const { balance, interest, paymentAmount } = this.state;
-    const loanInterest = (+interest / 1200) * +balance;
-    const paymentAfterInterest = +paymentAmount - +loanInterest;
-    this.setState({
-      balance: (+balance - +paymentAfterInterest).toFixed(2),
-    });
-    return paymentAfterInterest;
+    let principle = +balance * 0.01;
+    const loanInterest = ((+interest / 1200) * +balance).toFixed(2);
+
+    const payment = 
+    +balance <= 100 ? paymentAmount - principle  : paymentAmount - loanInterest; 
+
+    this.setState({ balance: (+balance - +payment).toFixed(2) });
   };
 
   untilPaidOff = () => {
-    const { balance, paymentAmount } = this.state;
+    const { balance, minPayment } = this.state;
     if (+balance > 0) {
       this.setState({
-        paymentsUntilPayoff: (balance / paymentAmount - 1).toFixed(0),
+        paymentsUntilPayoff: (balance / minPayment).toFixed(0),
       });
-    } else if (+balance - +paymentAmount === 0) {
+    } else if (+balance === 0) {
       this.setState({ paymentsUntilPayoff: 0 });
     }
   };
@@ -56,23 +64,26 @@ class CalculatorForm extends React.Component {
     });
   };
 
-  
   paymentSubmit = (e) => {
     e.preventDefault();
-    const { balance, paymentAmount, minPayment } = this.state;
+    const { balance, paymentAmount, minPayment, interest } = this.state;
+    let principle = +balance * 0.01;
+    const loanInterest = ((+interest / 1200) * +balance).toFixed(2);
+
     if (
-      +paymentAmount >= minPayment &&
-      +paymentAmount > 0 &&
-      +paymentAmount <= +balance
+      +paymentAmount >= +minPayment &&
+      +paymentAmount > 0 && 
+     (paymentAmount <= +balance + +loanInterest || paymentAmount <= +balance + +principle )
     ) {
       this.paymentCalculations();
       this.addToPaymentHistory();
       this.untilPaidOff();
-    } else if (+paymentAmount < minPayment) {
-      alert("Please pay at least your minimum payment");
-    } else if (+paymentAmount > +balance) {
-      alert("Please do not pay over your current balance");
     }
+    //   else if (+paymentAmount < minPayment) {
+    //   alert("Please pay at least your minimum payment");
+    // } else if (+paymentAmount > +balance) {
+    //   alert("Please do not pay over your current balance");
+    // }
   };
 
   render() {
