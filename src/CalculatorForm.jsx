@@ -18,38 +18,31 @@ class CalculatorForm extends React.Component {
   minimumPayment = () => {
     const { balance, interest } = this.state;
     let principle = +balance * 0.01;
-    let paymentInterest = ((+interest / 1200) * (+balance)).toFixed(2);
+    let paymentInterest = ((+interest / 1200) * +balance).toFixed(2);
     let minPay;
-
     balance <= 100
       ? (minPay = +balance + +principle)
-      : (minPay = (+principle + +paymentInterest).toFixed(2)); 
-
-    return this.setState({ 
-      minPayment: (+minPay).toFixed(2) 
+      : (minPay = +principle + +paymentInterest);
+    return this.setState({
+      minPayment: (+minPay).toFixed(2),
     });
+  };
+
+  untilPaidOff = () => {
+    const { balance, minPayment } = this.state;
+    let payOff = balance > 0 ? (balance / minPayment).toFixed(0) : 0;   console.log(payOff);
+    this.setState({ paymentsUntilPayoff: payOff });
   };
 
   paymentCalculations = () => {
     const { balance, interest, paymentAmount } = this.state;
     let principle = +balance * 0.01;
     const loanInterest = ((+interest / 1200) * +balance).toFixed(2);
-
-    const payment = 
-    +balance <= 100 ? paymentAmount - principle  : paymentAmount - loanInterest; 
-
+    const payment =
+      +balance <= 100
+        ? paymentAmount - principle
+        : paymentAmount - loanInterest;
     this.setState({ balance: (+balance - +payment).toFixed(2) });
-  };
-
-  untilPaidOff = () => {
-    const { balance, minPayment } = this.state;
-    if (+balance > 0) {
-      this.setState({
-        paymentsUntilPayoff: (balance / minPayment).toFixed(0),
-      });
-    } else if (+balance === 0) {
-      this.setState({ paymentsUntilPayoff: 0 });
-    }
   };
 
   addToPaymentHistory = () => {
@@ -69,21 +62,20 @@ class CalculatorForm extends React.Component {
     const { balance, paymentAmount, minPayment, interest } = this.state;
     let principle = +balance * 0.01;
     const loanInterest = ((+interest / 1200) * +balance).toFixed(2);
-
     if (
       +paymentAmount >= +minPayment &&
-      +paymentAmount > 0 && 
-     (paymentAmount <= +balance + +loanInterest || paymentAmount <= +balance + +principle )
+      +paymentAmount > 0 &&
+      (paymentAmount <= +balance + +loanInterest ||
+        paymentAmount <= +balance + +principle)
     ) {
       this.paymentCalculations();
       this.addToPaymentHistory();
       this.untilPaidOff();
+    } else if (+paymentAmount < minPayment) {
+      alert("Please pay at least your minimum payment");
+    } else if (+paymentAmount > +balance) {
+      alert("Please do not pay over your current balance");
     }
-    //   else if (+paymentAmount < minPayment) {
-    //   alert("Please pay at least your minimum payment");
-    // } else if (+paymentAmount > +balance) {
-    //   alert("Please do not pay over your current balance");
-    // }
   };
 
   render() {
@@ -101,6 +93,7 @@ class CalculatorForm extends React.Component {
         value: this.state.paymentAmount,
       },
     ];
+
     return (
       <div className="calc-wrapper">
         <form>
