@@ -7,16 +7,11 @@ const PaymentHistory = ({
     <div>
       <div className="balance-wrap">
         <div>LOAN BALANCE:</div>
-
         <div>${balance}</div>
       </div>
       <div className="payoff">
-        <div>Minimum Payment Due: {minPayment}</div>
-        <div>
-          {" "}
-          If you make repeat payments of your min-payment, the loan will be paid
-          off in this many payments: {paymentsUntilPayoff}
-        </div>
+        <div>Minimum Payment Due: ${minPayment}</div>
+        <div>Remaining-ish Payments: {paymentsUntilPayoff}</div>
       </div>
       <div className="history">PAYMENT HISTORY</div>
 
