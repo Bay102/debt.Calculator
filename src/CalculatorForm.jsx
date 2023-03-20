@@ -2,6 +2,7 @@ import React from "react";
 import PaymentHistory from "./PaymentHistory";
 
 class CalculatorForm extends React.Component {
+  
   state = {
     balance: "",
     interest: "",
@@ -30,14 +31,14 @@ class CalculatorForm extends React.Component {
 
   remainingPayments = () => {
     const { balance, paymentAmount, minPayment } = this.state;
-    let payOff ;
-   if (balance <= 100) {
-      payOff = 1
-    } else if ( minPayment === 0) {
-      payOff = 0
+    let payOff;
+    if (balance <= 100) {
+      payOff = 1;
+    } else if (minPayment === 0) {
+      payOff = 0;
     } else if (balance > 0) {
-      payOff = (balance / paymentAmount).toFixed(0) 
-    } 
+      payOff = (balance / paymentAmount).toFixed(0);
+    }
     this.setState({ paymentsUntilPayoff: payOff });
   };
 
@@ -49,7 +50,9 @@ class CalculatorForm extends React.Component {
       +balance <= 100
         ? paymentAmount - principle
         : paymentAmount - loanInterest;
-    this.setState({balance: (+balance - +payment).toFixed(2)}, () => this.minimumPayment());
+    this.setState({ balance: (+balance - +payment).toFixed(2) }, () =>
+      this.minimumPayment()
+    );
   };
 
   addToPaymentHistory = () => {
@@ -85,21 +88,17 @@ class CalculatorForm extends React.Component {
     }
   };
 
-
   resetForm = (e) => {
     // e.preventDefault();
-      this.setState({
-        balance: "",
-        interest: "",
-        paymentAmount: "",
-        paymentsUntilPayoff: "",
-        minPayment: "",
-        allPayments: [],
-      })
-
-      
-    }
-
+    this.setState({
+      balance: "",
+      interest: "",
+      paymentAmount: "",
+      paymentsUntilPayoff: "",
+      minPayment: "",
+      allPayments: [],
+    });
+  };
 
   render() {
     const fields = [
@@ -116,8 +115,6 @@ class CalculatorForm extends React.Component {
         value: this.state.paymentAmount,
       },
     ];
-
-  
 
     return (
       <div className="calc-wrapper">
@@ -141,14 +138,15 @@ class CalculatorForm extends React.Component {
             );
           })}
           <div className="buttons">
-             <div className="pay-button">
-            <button onClick={this.paymentSubmit}>Submit Payment</button>
+            <div className="pay-button">
+              <button onClick={this.paymentSubmit}>Submit Payment</button>
+            </div>
+            <div className="reset">
+              <button className="resetButton" onClick={this.resetForm}>
+                Reset
+              </button>
+            </div>
           </div>
-          <div className="reset">
-            <button className="resetButton" onClick={this.resetForm}>Reset</button>
-          </div>
-          </div>
-         
         </form>
         <PaymentHistory info={this.state} />
       </div>
